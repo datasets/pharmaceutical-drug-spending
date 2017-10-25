@@ -1,0 +1,63 @@
+{
+  "title": "Pharmaceutical Drug Spending by countries",
+  "name": "pharmaceutical-drug-spending",
+  "sources":[
+    {
+      "title": "Pharmaceutical Drug Spending from Organisation for Economic Cooperation and Development",
+      "path": "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.PHARMAEXP.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "odc-pddl",
+      "title": "Open Data Commons Public Domain Dedication and Licence (PDDL)",
+      "path": "http://opendatacommons.org/licenses/pddl/"
+    }
+  ],
+  "resources": [
+    {
+      "profile": "tabular-data-resource", 
+      "name": "pharma", 
+      "format": "csv", 
+      "encoding": "utf-8", 
+      "mediatype": "text/csv", 
+      "path": "data/data.csv", 
+      "schema": {
+        "fields": [
+          {
+            "name": "LOCATION",
+            "type": "string"
+          },
+          {
+            "name": "INDICATOR",
+            "type": "string"
+          },
+          {
+            "name": "SUBJECT",
+            "type": "string"
+          }, 
+          {
+            "name": "MEASURE",
+            "type": "string"
+          }, 
+          {
+            "name": "FREQUENCY",
+            "type": "string"
+          }, 
+          {
+            "name": "TIME",
+            "type": "year"
+          }, 
+          {
+            "name": "Value",
+            "type": "number"
+          }, 
+          {
+            "name": "Flag Codes",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}
