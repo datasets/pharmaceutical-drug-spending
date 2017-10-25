@@ -26,19 +26,23 @@
         "fields": [
           {
             "name": "LOCATION",
-            "type": "string"
+            "type": "string",
+            "description": "Country code"
           },
           {
             "name": "INDICATOR",
-            "type": "string"
+            "type": "string",
+            "description": "Type of indicator: Health expenditure indicators"
           },
           {
             "name": "SUBJECT",
-            "type": "string"
+            "type": "string",
+            "description": "Total"
           }, 
           {
             "name": "MEASURE",
-            "type": "string"
+            "type": "string",
+            "description": "Type of measure: USD per capita"
           }, 
           {
             "name": "FREQUENCY",
@@ -50,7 +54,8 @@
           }, 
           {
             "name": "Value",
-            "type": "number"
+            "type": "number",
+            "description": "in USD per capita (using economy-wide PPPs)"
           }, 
           {
             "name": "Flag Codes",
