@@ -17,7 +17,7 @@
   "resources": [
     {
       "profile": "tabular-data-resource", 
-      "name": "pharma", 
+      "name": "data", 
       "format": "csv", 
       "encoding": "utf-8", 
       "mediatype": "text/csv", 
@@ -30,37 +30,57 @@
             "description": "Country code"
           },
           {
-            "name": "INDICATOR",
-            "type": "string",
-            "description": "Type of indicator: Health expenditure indicators"
+            "name": "TIME",
+            "type": "year",
+            "description": "Date in the form of %Y"
           },
           {
-            "name": "SUBJECT",
-            "type": "string",
-            "description": "Total"
+            "name": "PC_HEALTHXP",
+            "type": "number",
+            "description": "% of Health spending"
           }, 
           {
-            "name": "MEASURE",
-            "type": "string",
-            "description": "Type of measure: USD per capita"
+            "name": "PC_GDP",
+            "type": "number",
+            "description": "% of GDP"
           }, 
           {
-            "name": "FREQUENCY",
-            "type": "string"
-          }, 
-          {
-            "name": "TIME",
-            "type": "year"
-          }, 
-          {
-            "name": "Value",
+            "name": "USD_CAP",
             "type": "number",
             "description": "in USD per capita (using economy-wide PPPs)"
+          },  
+          {
+            "name": "FLAG_CODES",
+            "type": "string"
           }, 
           {
-            "name": "Flag Codes",
-            "type": "string"
+            "name": "TOTAL_SPEND",
+            "type": "number",
+            "description": "Total spending in millions"
           }
+        ]
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "total-spending-by-country-2015",
+      "title": "Total spending by country 2015",
+      "resources": [
+        {
+          "name": "data",
+          "transform": {
+            "type": "filter",
+            "expression": "parseInt(data['TIME']) === 2015"
+          }
+        }
+      ],
+      "specType": "simple",
+      "spec": {
+        "type": "bar",
+        "group": "LOCATION",
+        "series": [
+          "TOTAL_SPEND"
         ]
       }
     }
