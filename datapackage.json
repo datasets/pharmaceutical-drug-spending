@@ -96,7 +96,7 @@
           "transform": [
             {
               "type": "filter",
-              "expression": "parseInt(data['LOCATION']) === 'USA'"
+              "expression": "data['LOCATION'] === 'USA'"
             }
           ]
         }
