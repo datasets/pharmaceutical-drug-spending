@@ -69,10 +69,12 @@
       "resources": [
         {
           "name": "data",
-          "transform": {
-            "type": "filter",
-            "expression": "parseInt(data['TIME']) === 2015"
-          }
+          "transform": [
+            {
+              "type": "filter",
+              "expression": "parseInt(data['TIME']) === 2015"
+            }
+          ]
         }
       ],
       "specType": "simple",
