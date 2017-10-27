@@ -82,7 +82,8 @@
         "type": "bar",
         "group": "LOCATION",
         "series": [
-          "TOTAL_SPEND"
+          "TOTAL_SPEND",
+          "USD_CAP"
         ]
       }
     }
