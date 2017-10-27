@@ -86,6 +86,29 @@
           "USD_CAP"
         ]
       }
+    },
+    {
+      "name": "total-spending-in-usa",
+      "title": "Total spending in USA",
+      "resources": [
+        {
+          "name": "data",
+          "transform": [
+            {
+              "type": "filter",
+              "expression": "parseInt(data['LOCATION']) === 'USA'"
+            }
+          ]
+        }
+      ],
+      "specType": "simple",
+      "spec": {
+        "type": "line",
+        "group": "TIME",
+        "series": [
+          "TOTAL_SPEND"
+        ]
+      }
     }
   ]
 }
