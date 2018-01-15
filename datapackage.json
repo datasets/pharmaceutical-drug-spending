@@ -65,7 +65,7 @@
   "views": [
     {
       "name": "total-spending-by-country-2015",
-      "title": "Total spending by country 2015",
+      "title": "Total spending by country 2015(in millions of dollars)",
       "resources": [
         {
           "name": "data",
@@ -82,14 +82,36 @@
         "type": "bar",
         "group": "LOCATION",
         "series": [
-          "TOTAL_SPEND",
+          "TOTAL_SPEND"
+        ]
+      }
+    },
+    {
+      "name": "spending-per-capita-2015",
+      "title": "Spending per capita in 2015",
+      "resources": [
+        {
+          "name": "data",
+          "transform": [
+            {
+              "type": "filter",
+              "expression": "parseInt(data['TIME']) === 2015"
+            }
+          ]
+        }
+      ],
+      "specType": "simple",
+      "spec": {
+        "type": "bar",
+        "group": "LOCATION",
+        "series": [
           "USD_CAP"
         ]
       }
     },
     {
       "name": "total-spending-in-usa",
-      "title": "Total spending in USA",
+      "title": "Total spending in USA(in millions of dollars)",
       "resources": [
         {
           "name": "data",
