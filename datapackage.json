@@ -65,7 +65,7 @@
   "views": [
     {
       "name": "total-spending-by-country-2015",
-      "title": "Total spending by country 2015(in millions of dollars)",
+      "title": "Total spending by country 2015 (in millions of dollars)",
       "resources": [
         {
           "name": "data",
@@ -111,7 +111,7 @@
     },
     {
       "name": "total-spending-in-usa",
-      "title": "Total spending in USA(in millions of dollars)",
+      "title": "Total spending in USA (in millions of dollars)",
       "resources": [
         {
           "name": "data",
