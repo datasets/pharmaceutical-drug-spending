@@ -110,8 +110,8 @@
       }
     },
     {
-      "name": "total-spending-in-usa",
-      "title": "Total spending in USA (in millions of dollars)",
+      "name": "total-spending-in-the-usa",
+      "title": "Total spending in the United States (in millions of dollars)",
       "resources": [
         {
           "name": "data",
