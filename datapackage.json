@@ -110,8 +110,8 @@
       }
     },
     {
-      "name": "total-spending-in-the-usa",
-      "title": "Total spending in the United States (in millions of dollars)",
+      "name": "percentage-of-gdp-in-the-usa",
+      "title": "Pharmaceutical drug spending in the United States (in percentage of GDP)",
       "resources": [
         {
           "name": "data",
@@ -125,10 +125,11 @@
       ],
       "specType": "simple",
       "spec": {
+        "yTitle": "Percent of GDP",
         "type": "line",
         "group": "TIME",
         "series": [
-          "TOTAL_SPEND"
+          "PC_GDP"
         ]
       }
     }
