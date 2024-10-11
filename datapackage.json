@@ -1,7 +1,7 @@
 {
   "title": "Pharmaceutical Drug Spending by countries",
   "name": "pharmaceutical-drug-spending",
-  "sources":[
+  "sources": [
     {
       "title": "Pharmaceutical Drug Spending from Organisation for Economic Cooperation and Development",
       "path": "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.PHARMAEXP.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"
@@ -16,12 +16,12 @@
   ],
   "resources": [
     {
-      "profile": "tabular-data-resource", 
-      "name": "data", 
-      "format": "csv", 
-      "encoding": "utf-8", 
-      "mediatype": "text/csv", 
-      "path": "data/data.csv", 
+      "profile": "tabular-data-resource",
+      "name": "data",
+      "format": "csv",
+      "encoding": "utf-8",
+      "mediatype": "text/csv",
+      "path": "data/data.csv",
       "schema": {
         "fields": [
           {
@@ -38,21 +38,21 @@
             "name": "PC_HEALTHXP",
             "type": "number",
             "description": "% of Health spending"
-          }, 
+          },
           {
             "name": "PC_GDP",
             "type": "number",
             "description": "% of GDP"
-          }, 
+          },
           {
             "name": "USD_CAP",
             "type": "number",
             "description": "in USD per capita (using economy-wide PPPs)"
-          },  
+          },
           {
             "name": "FLAG_CODES",
             "type": "string"
-          }, 
+          },
           {
             "name": "TOTAL_SPEND",
             "type": "number",
@@ -61,5 +61,6 @@
         ]
       }
     }
-  ]
+  ],
+  "collection": "healthcare-data"
 }
