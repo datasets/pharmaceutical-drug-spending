@@ -1,15 +1,20 @@
 import csv
+import urllib.request
 
-package = Package('https://datahub.io/core/population/datapackage.json')
+# URL of the population data
+url = 'https://raw.githubusercontent.com/datasets/population/refs/heads/main/data/population.csv'
 
-resources = package.descriptor['resources']
-for resource in resources:
-    if resource['name'] == 'population':
-        population = Resource({'path': resource['path']})
+# Fetching the data from the URL
+with urllib.request.urlopen(url) as response:
+    data = response.read().decode('utf-8')
 
-data = population.read(keyed=False)
-with open("archive/population.csv", "w") as csv_file:
+# Split the content into lines
+lines = data.splitlines()
+
+# Open the CSV file for writing
+with open("archive/population.csv", "w", newline='') as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
-    writer.writerow(('Country Name','Country Code','Year','Value'))
-    for line in data:
+    
+    # Write the data rows
+    for line in csv.reader(lines):
         writer.writerow(line)
