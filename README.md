@@ -24,9 +24,9 @@ Process is recorded and automated in python script:
 
 ```
 # to get population.csv
-scripts/population.py 
+python scripts/population.py 
 # to get final data.csv
-scripts/process.py
+python scripts/process.py
 ```
 
 ## License

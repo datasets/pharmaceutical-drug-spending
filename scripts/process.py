@@ -6,7 +6,9 @@ data = 'archive/pharma-spending.csv'
 
 def pharma_spending_all():
     for s in sources:
-        urllib.request.urlretrieve(s, data)
+        req = urllib.request.Request(s, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response, open(data, 'wb') as out_file:
+            out_file.write(response.read())
 
 def usd_per_cap():
     with open('archive/pharma-spending.csv', 'r') as inp, open('archive/usd-cap.csv', 'w', newline='') as out:
