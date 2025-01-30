@@ -54,7 +54,7 @@ jobs:
       run: |
         git diff --quiet && echo "No changes to commit" || (
           git add data archive/ &&
-          git reset archive/pharma-spending.csv &&
+          git restore --staged archive/pharma-spending.csv &&
           git commit -m "${{ env.CI_COMMIT_MESSAGE }}" &&
           git push origin main
         )
