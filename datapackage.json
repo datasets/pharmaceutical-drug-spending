@@ -50,10 +50,6 @@
             "description": "in USD per capita (using economy-wide PPPs)"
           },
           {
-            "name": "FLAG_CODES",
-            "type": "string"
-          },
-          {
             "name": "TOTAL_SPEND",
             "type": "number",
             "description": "Total spending in millions"
