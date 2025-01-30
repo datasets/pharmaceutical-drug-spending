@@ -52,11 +52,18 @@ jobs:
 
     - name: Commit and Push changes
       run: |
-        git diff --quiet && echo "No changes to commit" || (
-          git add data archive/ &&
-          git restore --staged archive/pharma-spending.csv &&
-          git commit -m "${{ env.CI_COMMIT_MESSAGE }}" &&
+        # Staging changes
+        git add data archive/
+
+        # Discard changes in pharma-spending.csv if it's not meant to be committed
+        git restore --staged archive/pharma-spending.csv
+
+        # Check if there are any changes staged for commit
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
           git push origin main
-        )
+        fi
       env:
         CI_COMMIT_MESSAGE: "Automated commit"
