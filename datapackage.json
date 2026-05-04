@@ -55,7 +55,8 @@
             "description": "Total spending in millions"
           }
         ]
-      }
+      },
+      "description": "Annual pharmaceutical drug spending by OECD country from 1970 to present, expressed as percentage of health spending, percentage of GDP, USD per capita (PPP-adjusted), and total millions USD."
     }
   ],
   "collection": "healthcare-data"
