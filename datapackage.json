@@ -1,23 +1,31 @@
 {
   "title": "Pharmaceutical Drug Spending by countries",
   "name": "pharmaceutical-drug-spending",
+  "description": "Pharmaceutical drug spending by country from 1971 to 2021, with indicators covering share of total health spending, share of GDP, spending in USD per capita (using economy-wide PPPs), and total spending in millions of USD. Data sourced from the OECD and supplemented with UN population figures.",
   "sources": [
     {
+      "name": "oecd-pharmaexp",
       "title": "Pharmaceutical Drug Spending from Organisation for Economic Cooperation and Development",
       "path": "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.PHARMAEXP.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"
+    },
+    {
+      "name": "un-population",
+      "title": "Population data from the datasets/population GitHub repository",
+      "path": "https://raw.githubusercontent.com/datasets/population/refs/heads/main/data/population.csv"
     }
   ],
   "licenses": [
     {
-      "name": "odc-pddl",
+      "name": "ODC-PDDL-1.0",
       "title": "Open Data Commons Public Domain Dedication and Licence (PDDL)",
-      "path": "http://opendatacommons.org/licenses/pddl/"
+      "path": "https://opendatacommons.org/licenses/pddl/"
     }
   ],
   "resources": [
     {
       "profile": "tabular-data-resource",
       "name": "data",
+      "description": "Annual pharmaceutical drug spending per country, combining OECD expenditure data with UN population figures. Each row represents one country-year combination. TOTAL_SPEND is derived by multiplying USD_CAP by the country's population and dividing by 1,000,000.",
       "format": "csv",
       "encoding": "utf-8",
       "mediatype": "text/csv",
@@ -32,7 +40,7 @@
           {
             "name": "TIME",
             "type": "year",
-            "description": "Date in the form of %Y"
+            "description": "Year of observation in the form YYYY"
           },
           {
             "name": "PC_HEALTHXP",
@@ -52,7 +60,7 @@
           {
             "name": "TOTAL_SPEND",
             "type": "number",
-            "description": "Total spending in millions"
+            "description": "Total spending in millions of USD, calculated as USD_CAP multiplied by country population divided by 1,000,000"
           }
         ]
       }
