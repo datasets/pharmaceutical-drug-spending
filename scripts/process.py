@@ -1,94 +1,64 @@
 import csv
 import urllib.request
 
-sources = ["https://stats.oecd.org/sdmx-json/data/DP_LIVE/.PHARMAEXP.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"]
-data = 'archive/pharma-spending.csv'
+# New OECD SDMX 2.1 API (stats.oecd.org was retired; data now lives in sdmx.oecd.org)
+# Pharmaceutical spending = System of Health Accounts, function HC5, all financing, all providers.
+# Each measure needs a separate request because PRICE_BASE differs.
+_BASE = "https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_SHA@DF_SHA,1.0"
+_PARAMS = "?dimensionAtObservation=AllDimensions&format=csvfile"
 
-def pharma_spending_all():
-    for s in sources:
-        req = urllib.request.Request(s, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response, open(data, 'wb') as out_file:
-            out_file.write(response.read())
+SOURCES = {
+    "PC_HEALTHXP": f"{_BASE}/.A.EXP_HEALTH.PT_EXP_HLTH._T._Z.HC5._T._T._Z._Z._Z{_PARAMS}",
+    "PC_GDP":      f"{_BASE}/.A.EXP_HEALTH.PT_B1GQ._T._Z.HC5._T._T._Z._Z._Z{_PARAMS}",
+    "USD_CAP":     f"{_BASE}/.A.EXP_HEALTH.USD_PPP_PS._T._Z.HC5._T._T._Z._Z.V{_PARAMS}",
+}
 
-def usd_per_cap():
-    with open('archive/pharma-spending.csv', 'r') as inp, open('archive/usd-cap.csv', 'w', newline='') as out:
-        reader = csv.reader(inp)
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'MEASURE', 'TIME', 'Value'))
-        next(reader)  # Skip header
-        # Write rows where USD_CAP and TIME is only annual (4 digits)
-        writer.writerows([(row[1], row[4], row[6], row[7]) for row in reader if row[4] == "USD_CAP" and len(row[6]) == 4 and row[3] == 'TOT' and row[2] == 'PHARMAEXP'])
+POPULATION_FILE = "archive/population.csv"
 
-def percent_health_spending():
-    with open('archive/pharma-spending.csv', 'r') as inp, open('archive/perc-health-spend.csv', 'w', newline='') as out:
-        reader = csv.reader(inp)
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'MEASURE', 'TIME', 'Value'))
-        next(reader)  # Skip header
-        writer.writerows([(row[1], row[4], row[6], row[7]) for row in reader if row[4] == "PC_HEALTHXP" and len(row[6]) == 4 and row[3] == 'TOT' and row[2] == 'PHARMAEXP'])
 
-def percent_gdp():
-    with open('archive/pharma-spending.csv', 'r') as inp, open('archive/perc-gdp.csv', 'w', newline='') as out:
-        reader = csv.reader(inp)
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'MEASURE', 'TIME', 'Value'))
-        next(reader)  # Skip header
-        writer.writerows([(row[1], row[4], row[6], row[7]) for row in reader if row[4] == "PC_GDP" and len(row[6]) == 4 and row[3] == 'TOT' and row[2] == 'PHARMAEXP'])
+def _fetch(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req) as resp:
+        return resp.read().decode("utf-8")
 
-# Optimized merging with dictionaries to avoid nested loops
-def merge_gdp():
-    with open('archive/perc-health-spend.csv', 'r') as inp1, open('archive/perc-gdp.csv', 'r') as inp2, open('archive/merge-health-gdp.csv', 'w', newline='') as out:
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'TIME', 'PC_HEALTHXP', 'PC_GDP'))
 
-        reader1 = csv.reader(inp1)
-        reader2 = csv.reader(inp2)
-        next(reader1), next(reader2)  # Skip headers
+def fetch_measure(url):
+    """Return {(country, year): float} from an OECD SDMX CSV response."""
+    result = {}
+    reader = csv.reader(_fetch(url).splitlines())
+    next(reader)  # skip header
+    for row in reader:
+        value = row[14]  # OBS_VALUE column
+        if value:
+            result[(row[1], row[13])] = float(value)  # (REF_AREA, TIME_PERIOD)
+    return result
 
-        health_dict = {(row[0], row[2]): row for row in reader1}  # Key by LOCATION, TIME
-        for row2 in reader2:
-            key = (row2[0], row2[2])
-            if key in health_dict:
-                row = health_dict[key]
-                writer.writerow((row[0], row[2], row[3], row2[3]))
 
-def merge_cap():
-    with open('archive/merge-health-gdp.csv', 'r') as inp1, open('archive/usd-cap.csv', 'r') as inp2, open('archive/merge-all.csv', 'w', newline='') as out:
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'TIME', 'PC_HEALTHXP', 'PC_GDP', 'USD_CAP'))
+def load_population():
+    """Return {(country_code, year): population} from the local population CSV."""
+    result = {}
+    with open(POPULATION_FILE, newline="") as f:
+        reader = csv.reader(f)
+        next(reader)
+        for row in reader:
+            if row[3]:
+                result[(row[1], row[2])] = float(row[3])
+    return result
 
-        reader1 = csv.reader(inp1)
-        reader2 = csv.reader(inp2)
-        next(reader1), next(reader2)  # Skip headers
 
-        health_gdp_dict = {(row[0], row[1]): row for row in reader1}  # Key by LOCATION, TIME
-        for row2 in reader2:
-            key = (row2[0], row2[2])
-            if key in health_gdp_dict:
-                row = health_gdp_dict[key]
-                writer.writerow((row[0], row[1], row[2], row[3], row2[3]))
+health_pct = fetch_measure(SOURCES["PC_HEALTHXP"])
+gdp_pct    = fetch_measure(SOURCES["PC_GDP"])
+usd_cap    = fetch_measure(SOURCES["USD_CAP"])
+population = load_population()
 
-def merge_total_spending():
-    with open('archive/merge-all.csv', 'r') as inp1, open('archive/population.csv', 'r') as inp2, open('data/data.csv', 'w', newline='') as out:
-        writer = csv.writer(out)
-        writer.writerow(('LOCATION', 'TIME', 'PC_HEALTHXP', 'PC_GDP', 'USD_CAP', 'TOTAL_SPEND'))
+common_keys = sorted(set(health_pct) & set(gdp_pct) & set(usd_cap))
 
-        reader1 = csv.reader(inp1)
-        reader2 = csv.reader(inp2)
-        next(reader1), next(reader2)  # Skip headers
-
-        merge_all_dict = {(row[0], row[1]): row for row in reader1}  # Key by LOCATION, TIME
-        for row2 in reader2:
-            key = (row2[1], row2[2])
-            if key in merge_all_dict:
-                row = merge_all_dict[key]
-                total_spending = round(float(row2[3]) * float(row[4]) / 1_000_000, 2)
-                writer.writerow((*row, total_spending))
-
-pharma_spending_all()
-usd_per_cap()
-percent_health_spending()
-percent_gdp()
-merge_gdp()
-merge_cap()
-merge_total_spending()
+with open("data/data.csv", "w", newline="") as out:
+    writer = csv.writer(out)
+    writer.writerow(("LOCATION", "TIME", "PC_HEALTHXP", "PC_GDP", "USD_CAP", "TOTAL_SPEND"))
+    for key in common_keys:
+        country, year = key
+        usd = usd_cap[key]
+        pop = population.get(key)
+        total_spend = round(pop * usd / 1_000_000, 2) if pop else ""
+        writer.writerow((country, year, health_pct[key], gdp_pct[key], usd, total_spend))

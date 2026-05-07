@@ -1,12 +1,12 @@
 {
   "title": "Pharmaceutical Drug Spending by countries",
   "name": "pharmaceutical-drug-spending",
-  "description": "Pharmaceutical drug spending by country from 1971 to 2021, with indicators covering share of total health spending, share of GDP, spending in USD per capita (using economy-wide PPPs), and total spending in millions of USD. Data sourced from the OECD and supplemented with UN population figures.",
+  "description": "Pharmaceutical drug spending by country from 1970 to 2024, with indicators covering share of total health spending, share of GDP, spending in USD per capita (using economy-wide PPPs), and total spending in millions of USD. Data sourced from the OECD System of Health Accounts (SHA) and supplemented with UN population figures.",
   "sources": [
     {
-      "name": "oecd-pharmaexp",
-      "title": "Pharmaceutical Drug Spending from Organisation for Economic Cooperation and Development",
-      "path": "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.PHARMAEXP.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"
+      "name": "oecd-sha-pharmaexp",
+      "title": "Pharmaceutical Drug Spending (HC5) from OECD System of Health Accounts",
+      "path": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.HD,DSD_SHA@DF_SHA,1.0/.A.EXP_HEALTH.USD_PPP_PS+PT_EXP_HLTH+PT_B1GQ._T._Z.HC5._T._T._Z._Z.?dimensionAtObservation=AllDimensions&format=csvfile"
     },
     {
       "name": "un-population",
