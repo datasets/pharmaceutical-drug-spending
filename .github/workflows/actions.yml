@@ -40,7 +40,6 @@ jobs:
       - name: Commit and push changes
         run: |
           git add data archive/
-          git restore --staged archive/pharma-spending.csv
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
