@@ -8,7 +8,7 @@ Data comes from Organisation for Economic Cooperation and Development on https:/
 
 It consists of useful information about percent of health spending, percent of GDP and US dollars per capita for specific countries. Also, we added total spending by countries using their population data.
 
-Population data comes from https://raw.githubusercontent.com/datasets/population/refs/heads/main/data/population.csv since it is regularly updated and includes all country codes.
+Population data comes from DataHub's http://datahub.io/core/population since it is regularly updated and includes all country codes.
 
 ## Preparation 
 
